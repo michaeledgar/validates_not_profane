@@ -2,15 +2,15 @@ require 'rake'
 require 'rake/testtask'
 require 'rake/rdoctask'
 
-desc 'Default: run unit tests.'
-task :default => :test
-
-desc 'Test the validates_not_profane plugin.'
-Rake::TestTask.new(:test) do |t|
-  t.libs << 'lib'
-  t.pattern = 'test/**/*_test.rb'
-  t.verbose = true
-end
+# desc 'Default: run unit tests.'
+# task :default => :test
+# 
+# desc 'Test the validates_not_profane plugin.'
+# Rake::TestTask.new(:test) do |t|
+#   t.libs << 'lib'
+#   t.pattern = 'test/**/*_test.rb'
+#   t.verbose = true
+# end
 
 desc 'Generate documentation for the validates_not_profane plugin.'
 Rake::RDocTask.new(:rdoc) do |rdoc|
