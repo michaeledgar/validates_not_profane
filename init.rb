@@ -8,4 +8,4 @@
 ##########################################
 
 require_dependency File.join(File.dirname(__FILE__), 'lib/active_record/validations/validates_not_profane')
-ActiveRecord::Base.send :include, OurGreen::Validations::NotProfane
+ActiveRecord::Base.send :include, ActiveRecord::Validations::NotProfane
