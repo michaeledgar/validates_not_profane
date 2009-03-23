@@ -1,10 +1,26 @@
 ValidatesNotProfane
 ===================
 
-This plugin provides a simple blacklist of profane words, and a
-validation against that blacklist. Instead of filtering (like so
-many solutions out there), we prevent the record from being created
-if it contains foul language in a given field.
+This plugin provides a hook into the Profanalyzer gem as a validation
+for your ActiveRecord models. It's use is simple:
+
+    validates_not_profane :column_name, :column_2
+
+Will cause the model to produce errors if that column contains profanity
+in its value. Of course, since the Profanalyzer gem is customizable, so is
+the validation:
+
+    validates_not_profane :post_title, :racist => true, :sexual => false
+
+will block racial slurs, but nothing else.
+
+    validates_not_profane :post_title, :tolerance => 5
+
+will block only the most vile of profanity. The scale for tolerance is
+from 0-5, which is mostly subjective, in all honesty.
+
+You can also use the :label option to customize the error message - see
+the examples below.
 
 
 Example
@@ -14,10 +30,13 @@ Group.rb:
 
 validates_not_profane :name
 validates_not_profane :permalink, :label => "URL"
+validates_not_profane :description, :racist => false, :sexual => true
 
 Controller:
 
-Group.create(:name => "Shitty Kids", :permalink => "shitty")
+Group.create(:name => "Shitty Kids", 
+             :permalink => "shitty", 
+             :description => "i'm a dumb mick")
 
 
 produces these errors:
@@ -25,6 +44,8 @@ produces these errors:
 * Name must not contain any vulgar words
 * URL must not contain any vulgar words
 
+The description, despite having a racial slur for Irish people in it,
+will pass validation. It's as simple as that!
 
-Copyright (c) 2009 Michael J. Edgar, not licensed for use by anyone
-without the express, written permission of OurGreen, Inc.
+Copyright (c) 2009 Michael J. Edgar. See LICENSE to see the MIT license
+under which this software is licensed.
