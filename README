@@ -1,0 +1,30 @@
+ValidatesNotProfane
+===================
+
+This plugin provides a simple blacklist of profane words, and a
+validation against that blacklist. Instead of filtering (like so
+many solutions out there), we prevent the record from being created
+if it contains foul language in a given field.
+
+
+Example
+=======
+
+Group.rb:
+
+validates_not_profane :name
+validates_not_profane :permalink, :label => "URL"
+
+Controller:
+
+Group.create(:name => "Shitty Kids", :permalink => "shitty")
+
+
+produces these errors:
+
+* Name must not contain any vulgar words
+* URL must not contain any vulgar words
+
+
+Copyright (c) 2009 Michael J. Edgar, not licensed for use by anyone
+without the express, written permission of OurGreen, Inc.
