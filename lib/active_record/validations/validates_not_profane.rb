@@ -57,24 +57,6 @@ module ActiveRecord
             msg_string = "#{configuration[:message]}"
             addName = true
           end
-          if configuration.has_key?(:tolerance)
-            Profanalyzer.tolerance = configuration[:tolerance]
-            configuration.delete(:tolerance)
-          end
-          if configuration.has_key?(:sexual) && configuration[:sexual] == true
-            Profanalyzer.check_all = false
-            Profanalyzer.sexual = true
-            configuration.delete :sexual
-          end
-          if configuration.has_key?(:racist) && configuration[:racist] == true
-            Profanalyzer.check_all = false
-            Profanalyzer.racist = true
-            configuration.delete :racist
-          end
-          if configuration.has_key?(:all) && configuration[:all] == true
-            Profanalyzer.check_all = true
-            configuration.delete :all
-          end
           
           configuration.store(:message, msg_string)
           configuration.delete(:label)
@@ -83,6 +65,30 @@ module ActiveRecord
           # that will run our validation on the list of attributes and our config.
           
           validates_each(attr_names, configuration) do |record, attr_name, value|
+            if configuration.has_key?(:tolerance)
+              Profanalyzer.tolerance = configuration[:tolerance]
+            else
+              Profanalyzer.tolerance = 2
+            end
+            if configuration[:all]
+              Profanalyzer.check_all = true
+            elsif configuration[:sexual] && configuration[:racist]
+              Profanalyzer.check_all = false
+              Profanalyzer.check_sexual = true
+              Profanalyzer.check_racist = true
+            elsif configuration[:sexual]
+              Profanalyzer.check_all = false
+              Profanalyzer.check_sexual = true
+              Profanalyzer.check_racist = false
+            elsif configuration[:racist]
+              Profanalyzer.check_all = false
+              Profanalyzer.check_sexual = false
+              Profanalyzer.check_racist = true
+            else
+              Profanalyzer.check_all = true
+            end
+            puts "\n"
+            puts "attr_name: #{attr_name}, config: "+configuration.inspect
             record.errors.add(attr_name, configuration[:message]) if addName && Profanalyzer.profane?(value)
             record.errors.add_to_base(configuration[:message])    if !addName && Profanalyzer.profane?(value)
             
