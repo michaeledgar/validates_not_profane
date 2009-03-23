@@ -35,8 +35,12 @@ module ActiveRecord
         # class method that enables profanity validation.
         # attr_names = attributes to filter
         # also takes a hash as configuration. Options:
-        #    :label   =   Name of field to display instead of the field's name itself
-        #                 (eg :label => "URL" instead of displaying "permalink")
+        #    :label       =    Name of field to display instead of the field's name itself
+        #                      (eg :label => "URL" instead of displaying "permalink")
+        #    :tolerance   =    Tolerance for Profanalyzer
+        #    :sexual      =    whether to check for sexual words
+        #    :racist      =    whether to check for racial slurs
+        #    :all         =    whether to check all bad words
         #
         # The core of this code comes from the ActiveRecord validations.rb file,
         # courtesy of David Heinemeier Hansson. Thanks dude.
@@ -66,6 +70,10 @@ module ActiveRecord
             Profanalyzer.check_all = false
             Profanalyzer.racist = true
             configuration.delete :racist
+          end
+          if configuration.has_key?(:all) && configuration[:all] == true
+            Profanalyzer.check_all = true
+            configuration.delete :all
           end
           
           configuration.store(:message, msg_string)
