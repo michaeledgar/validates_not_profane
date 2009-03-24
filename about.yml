@@ -1,0 +1,7 @@
+author: Michael j. Edgar
+summary: File upload handling plugin.
+homepage: http://beforefilter.blogspot.com/
+plugin: git://github.com/michaeledgar/validates_not_profane.git
+license: MIT
+version: 0.1.0
+rails_version: 1.1.2+ (hint at what version of rails to use this on)

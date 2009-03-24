@@ -24,6 +24,7 @@ from 0-5, which is mostly subjective, in all honesty.
 
 You can also use the :label option to customize the error message - see
 the examples below.
+
 == FEATURES/PROBLEMS:
 
 * Tolerance-based profanity checking
