@@ -1,7 +1,7 @@
 author: Michael j. Edgar
-summary: File upload handling plugin.
+summary: "Validations that prevent a model from saving if they contain profane, vulgar, racist, or otherwise offensive language. Highly customizable to allow for lax or strict filtering, and to turn each category on or off."
 homepage: http://beforefilter.blogspot.com/
 plugin: git://github.com/michaeledgar/validates_not_profane.git
 license: MIT
 version: 0.1.0
-rails_version: 1.1.2+ (hint at what version of rails to use this on)
+rails_version: 1.1.2+
